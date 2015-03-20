@@ -22,15 +22,18 @@ public class HomePage extends ActionBarActivity {
         setContentView(R.layout.activity_home_page);
         Firebase.setAndroidContext(this);
 
+        // Firebase code
+        // get the firebase db reference
         Firebase myFirebaseRef = new Firebase("https://popping-heat-8474.firebaseio.com/");
-       // Firebase rootRef = new Firebase("https://docs-examples.firebaseio.com/web/data");
 
         Query queryRef = myFirebaseRef.orderByValue();
+        // add event listener
         queryRef.addChildEventListener(new ChildEventListener() {
+            // to read the data when child of object is added
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                System.out.println("The " + snapshot.getKey() + " dinosaur's score is " + snapshot.getValue());
-                Log.d("Msg","The " + snapshot.getKey() + " dinosaur's score is " + snapshot.getValue());
+                System.out.println("Key is" + snapshot.getKey() + " value is " + snapshot.getValue());
+                Log.d("Msg","Key is" + snapshot.getKey() + " value is " + snapshot.getValue());
             }
 
             @Override
