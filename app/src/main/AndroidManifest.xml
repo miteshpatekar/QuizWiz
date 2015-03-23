@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.quizwiz" >
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name="com.quizwiz.InitialLoginActivity"
+            android:name=".InitialLoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
@@ -19,38 +20,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.quizwiz.RegisterActivity"
+            android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name="com.quizwiz.LoginActivity"
+            android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name="com.quizwiz.HomePage"
+            android:name=".HomePage"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.quizwiz.Categories"
+            android:name=".Categories"
             android:label="@string/title_activity_categories" >
         </activity>
         <activity
-            android:name="com.quizwiz.SelectChallenger"
+            android:name=".SelectChallenger"
             android:label="@string/title_activity_select_challenger" >
         </activity>
         <activity
-            android:name="com.quizwiz.QuizQuestions"
+            android:name=".QuizQuestions"
             android:label="@string/title_activity_quiz_questions" >
         </activity>
         <activity
-            android:name="com.quizwiz.ProfileActivity"
+            android:name=".ProfileActivity"
             android:label="@string/title_activity_profile_activity" >
         </activity>
         <activity
-            android:name="com.quizwiz.PostQuiz"
+            android:name=".PostQuiz"
             android:label="@string/title_activity_post_quiz" >
+        </activity>
+        <activity
+            android:name=".AddFriend"
+            android:label="@string/title_activity_add_friend" >
+        </activity>
+        <activity
+            android:name=".Requests"
+            android:label="@string/title_activity_requests" >
         </activity>
     </application>
 

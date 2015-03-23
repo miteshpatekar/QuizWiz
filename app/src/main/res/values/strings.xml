@@ -11,5 +11,8 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_profile_activity">ProfileActivity</string>
     <string name="title_activity_post_quiz">PostQuiz</string>
+    <string name="title_activity_add_friend">AddFriend</string>
+    <string name="FireBaseDBReference">https://popping-heat-8474.firebaseio.com</string>
+    <string name="title_activity_requests">Requests</string>
 
 </resources>

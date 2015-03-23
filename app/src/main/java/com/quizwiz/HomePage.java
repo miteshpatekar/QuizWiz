@@ -1,10 +1,13 @@
 package com.quizwiz;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -13,8 +16,13 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class HomePage extends ActionBarActivity {
+
+    String uname=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +30,18 @@ public class HomePage extends ActionBarActivity {
         setContentView(R.layout.activity_home_page);
         Firebase.setAndroidContext(this);
 
+        // Save the session state username
+        SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+        editor.putString("uname", "avelankar"); //set username in shared session variable
+        editor.commit();
+
+        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+        uname = prefs.getString("uname", "No name defined");//"No name defined" is the default value.
+        Toast.makeText(this,"Welcome"+uname,Toast.LENGTH_SHORT).show();
+
         // Firebase code
         // get the firebase db reference
-        Firebase myFirebaseRef = new Firebase("https://popping-heat-8474.firebaseio.com/");
+        Firebase myFirebaseRef = new Firebase(getString(R.string.FireBaseDBReference));
 
         Query queryRef = myFirebaseRef.orderByValue();
         // add event listener
@@ -58,19 +75,34 @@ public class HomePage extends ActionBarActivity {
             // ....
         });
 
-        myFirebaseRef.addValueEventListener(new ValueEventListener() {
+        //to get the request List
+        // Get a reference to our posts
+
+        Firebase requestRef = new Firebase(getString(R.string.FireBaseDBReference)+"/User/"+uname+"/requestList");
+
+        requestRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println(snapshot.getValue());
+
+                Log.d("Values are ", snapshot.getValue().toString());
+
+                // store the values in map structure
+                Map<String, Object> newPost = (Map<String, Object>) snapshot.getValue();
+                //iterate through the list
+                for(Map.Entry<String, Object> entry : newPost.entrySet()) {
+                    String key = entry.getKey(); // gets the key of object
+                    Log.d("Key is", key);
+                    Object value = entry.getValue();
+                    Log.d("Vales is", entry.getValue().toString());
+                }
             }
+
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
     }
-
-
 
     public void QuickQuiz(View v)
     {
@@ -97,4 +129,16 @@ public class HomePage extends ActionBarActivity {
     {
         startActivity(new Intent(HomePage.this,PostQuiz.class ));
     }
+
+    public void AddFriend(View v)
+    {
+        startActivity(new Intent(HomePage.this,AddFriend.class ));
+    }
+
+    public void Requests(View v)
+    {
+        startActivity(new Intent(HomePage.this,Requests.class ));
+    }
+
 }
+
