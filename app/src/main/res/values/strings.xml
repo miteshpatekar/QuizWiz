@@ -14,5 +14,6 @@
     <string name="title_activity_add_friend">AddFriend</string>
     <string name="FireBaseDBReference">https://popping-heat-8474.firebaseio.com</string>
     <string name="title_activity_requests">Requests</string>
+    <string name="title_activity_results">Results</string>
 
 </resources>
