@@ -73,7 +73,7 @@ public class SelectChallenger extends ActionBarActivity {
                                     int position, long id) {
                 final String item = (String) parent.getItemAtPosition(position);
                 Log.d("username selected is- ",item);
-                startActivity(new Intent(SelectChallenger.this,QuizQuestions.class));
+                startActivity(new Intent(SelectChallenger.this,Categories.class));
             }
         });
     }

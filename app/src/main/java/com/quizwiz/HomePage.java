@@ -107,12 +107,16 @@ public class HomePage extends ActionBarActivity {
     public void QuickQuiz(View v)
     {
         //Intent i=new Intent(this,Categories.class);
-        startActivity(new Intent(HomePage.this, Categories.class));
+        Intent i=new Intent(HomePage.this,Categories.class);
+        i.putExtra("activity","quiz");
+        startActivity(i);
     }
 
-    public void Challenge(View v)
-    {
-        startActivity(new Intent(HomePage.this, SelectChallenger.class));
+    public void Challenge(View v) {
+        Intent i = new Intent(HomePage.this, Categories.class);
+        i.putExtra("activity", "quiz");
+        Intent i2 = new Intent(new Intent(HomePage.this, SelectChallenger.class));
+        startActivity(i2);
     }
 
     public void InviteFriends(View v)
@@ -127,7 +131,9 @@ public class HomePage extends ActionBarActivity {
 
     public void PostQuestion(View v)
     {
-        startActivity(new Intent(HomePage.this,PostQuiz.class ));
+        Intent i=new Intent(HomePage.this,Categories.class);
+        i.putExtra("activity","post");
+        startActivity(i);
     }
 
     public void AddFriend(View v)

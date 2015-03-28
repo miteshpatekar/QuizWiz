@@ -12,11 +12,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="36dp" />
+        android:layout_marginTop="36dp"
+        android:textSize="20dp" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:text="stdio.h"
         android:id="@+id/button8"
         android:onClick="onClickA"
@@ -26,11 +27,12 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="27dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textSize="15dp" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:text="stdlib.h"
         android:id="@+id/button9"
         android:onClick="onClickB"
@@ -39,11 +41,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/button8"
-        android:layout_alignEnd="@+id/button8" />
+        android:layout_alignEnd="@+id/button8"
+        android:textSize="15dp" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:text="stdio.h and stddef.h"
         android:id="@+id/button10"
         android:onClick="onClickC"
@@ -52,11 +55,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/button9"
-        android:layout_alignEnd="@+id/button9" />
+        android:layout_alignEnd="@+id/button9"
+        android:textSize="15dp" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:text="math.h"
         android:id="@+id/button11"
         android:onClick="onClickD"
@@ -65,7 +69,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/button10"
-        android:layout_alignEnd="@+id/button10" />
+        android:layout_alignEnd="@+id/button10"
+        android:textSize="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,14 +84,48 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:text="Next Question"
         android:onClick="onNextQ"
+        android:textAllCaps="false"
         android:id="@+id/button13"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Points"
+        android:id="@+id/textView17"
+        android:layout_above="@+id/button13"
+        android:layout_alignRight="@+id/button13"
+        android:layout_alignEnd="@+id/button13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Questions left"
+        android:id="@+id/textView18"
+        android:layout_above="@+id/button13"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Timer"
+        android:id="@+id/textView19"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/button8"
+        android:layout_alignEnd="@+id/button8"
+        android:textSize="25dp"
+        android:textColor="#ffff231d" />
 
 </RelativeLayout>

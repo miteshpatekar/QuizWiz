@@ -3,6 +3,7 @@ package com.quizwiz;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,11 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+import android.os.Handler;
 
 
 public class QuizQuestions extends ActionBarActivity {
@@ -32,13 +38,17 @@ public class QuizQuestions extends ActionBarActivity {
     String optionB="B";
     String optionC="C";
     String optionD="D";
-    String correct=optionA;
+    String correct="Answer";
     Button op1Button;
     Button op2Button;
     Button op3Button;
     Button op4Button;
     Button correctButton;
     TextView questionText;
+    TextView categoryText;
+    TextView pointsText;
+    TextView qLeftText;
+    TextView timerText;
     Drawable buttonColor;
     boolean aState=false;
     boolean bState=false;
@@ -47,14 +57,19 @@ public class QuizQuestions extends ActionBarActivity {
     boolean answered=false;
     int points=0;
     String total="";
+    private Timer timer = new Timer();
+    int qTime=26;
+    int timerVal=qTime;
+    final Handler myHandler = new Handler();
 
     Question q1;
     Question q2;
     Question q3;
-    ArrayList <Question> questions;
+    ArrayList <Question> questionList;
     int qCount=-1;
-
-
+    int questionCount=1;
+    String category="";
+    int maxQuestions=10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +77,10 @@ public class QuizQuestions extends ActionBarActivity {
         setContentView(R.layout.activity_quiz_questions);
         qCount=-1;
         questionText=(TextView)findViewById(R.id.textView6);
+        categoryText=(TextView)findViewById(R.id.textView13);
+        pointsText=(TextView)findViewById(R.id.textView17);
+        qLeftText=(TextView)findViewById(R.id.textView18);
+        timerText=(TextView)findViewById(R.id.textView19);
         op1Button=(Button)findViewById(R.id.button8);
         op2Button=(Button)findViewById(R.id.button9);
         op3Button=(Button)findViewById(R.id.button10);
@@ -69,35 +88,39 @@ public class QuizQuestions extends ActionBarActivity {
         buttonColor = op1Button.getBackground();
 
 
-        q1=new Question("The correct declaration of an integer named i is:","int i;","i = int;","integer = i;"
-        ,"int = i;","int i;");
+        q1=new Question("In Java the correct declaration of an integer named i is:","int i;","i = int;","integer = i;"
+                ,"int = i;","int i;");
         q2=new Question("What is the brain of the computer?","Motherboard","RAM","CPU","NIC","CPU");
         q3=new Question("An IP address is a numeric quantity that identifies","a network adapter to other devices on the network","the manufacturer of a computer","the physical location of a computer","none of the above","a network adapter to other devices on the network");
-        questions=new ArrayList<Question>();
-        questions.add(q1);
-        questions.add(q2);
-        questions.add(q3);
+        questionList=new ArrayList<Question>();
+        // questions.add(q1);
+        // questions.add(q2);
+        // questions.add(q3);
 
-        //retrieveData();
-        nextQuestion();
+        retrieveData();
+        // nextQuestion();
     }
 
     public void retrieveData()
     {
-        Firebase.setAndroidContext(this);
+        Log.d("RetrieveData", "Gathering Values");
 
-        Firebase myFirebaseRef = new Firebase("https://popping-heat-8474.firebaseio.com/Questions/CS");
+        Firebase.setAndroidContext(this);
+        Intent i=getIntent();
+        category = i.getStringExtra("category");
+        categoryText.setText("Category - "+category);
+        pointsText.setText("Points: " +points);
+
+        Firebase myFirebaseRef = new Firebase("https://popping-heat-8474.firebaseio.com/Questions/"  +category);
         // Firebase rootRef = new Firebase("https://docs-examples.firebaseio.com/web/data");
 
         final Query queryRef = myFirebaseRef.orderByKey();
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                //System.out.println("!!!!!!! The " + snapshot.getKey() + " dinosaur's score is " + snapshot.getValue());
-                Log.d("Msg","Question " + snapshot.getKey() + " components: " + snapshot.getValue());
+                Log.d("Msg","Question " + snapshot.getKey() + " Components: " + snapshot.getValue());
                 Object o=new Object();
                 o=snapshot.getValue();
-               // Log.d("Here it is"," Question " + o.toString());
             }
 
             @Override
@@ -122,11 +145,41 @@ public class QuizQuestions extends ActionBarActivity {
             // ....
         });
 
-        myFirebaseRef.addValueEventListener(new ValueEventListener() {
+        myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println(snapshot.getValue());
+                // store the values in map structure
+                Map<String, Object> newPost = (Map<String, Object>) snapshot.getValue();
+                //iterate through the list
+                for (Map.Entry<String, Object> entry : newPost.entrySet()) {
+
+                    String question = snapshot.child(entry.getKey().toString() + "/QText").getValue().toString();
+                    Log.d("Question", question);
+                    String optionA = snapshot.child(entry.getKey().toString() + "/Op1").getValue().toString();
+                    Log.d("OptionA", optionA);
+                    String optionB = snapshot.child(entry.getKey().toString() + "/Op2").getValue().toString();
+                    Log.d("OptionB", optionB);
+                    String optionC = snapshot.child(entry.getKey().toString() + "/Op3").getValue().toString();
+                    Log.d("OptionC", optionC);
+                    String optionD = snapshot.child(entry.getKey().toString() + "/Op4").getValue().toString();
+                    Log.d("OptionD", optionD);
+                    String correct = snapshot.child(entry.getKey().toString() + "/Answer").getValue().toString();
+                    Log.d("Answer", correct);
+
+                    Question q = new Question(question, optionA, optionB, optionC, optionD, correct);
+                    Log.d("Question", q.toString());
+                    questionList.add(q);
+                    questionCount++;
+                    Log.d("QuestionCount", questionCount + "");
+                }
+                Collections.shuffle(questionList);
+                if (questionList.size()>maxQuestions) {
+                    questionList.subList(maxQuestions, questionList.size()).clear();
+                }
+                nextQuestion();
             }
+
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
@@ -159,13 +212,22 @@ public class QuizQuestions extends ActionBarActivity {
     public void nextQuestion()
     {
         qCount++;
-        if(qCount<questions.size()) {
-            question = questions.get(qCount).getQuestion().toString();
-            correct = questions.get(qCount).getAnswer().toString();
-            optionA = questions.get(qCount).getOption1().toString();
-            optionB = questions.get(qCount).getOption2().toString();
-            optionC = questions.get(qCount).getOption3().toString();
-            optionD = questions.get(qCount).getOption4().toString();
+        pointsText.setText("Points: " +points);
+        if ((questionList.size()-qCount)<=0){
+            qLeftText.setText("Questions Left: 0");
+        }
+        else {
+            qLeftText.setText("Questions Left: " + (questionList.size() - qCount - 1));
+        }
+
+
+        if(qCount<questionList.size()) {
+            question = questionList.get(qCount).getQuestion().toString();
+            correct = questionList.get(qCount).getAnswer().toString();
+            optionA = questionList.get(qCount).getOption1().toString();
+            optionB = questionList.get(qCount).getOption2().toString();
+            optionC = questionList.get(qCount).getOption3().toString();
+            optionD = questionList.get(qCount).getOption4().toString();
 
             questionText.setText(question);
             op1Button.setText(optionA);
@@ -185,77 +247,154 @@ public class QuizQuestions extends ActionBarActivity {
             op2Button.setBackground(buttonColor);
             op3Button.setBackground(buttonColor);
             op4Button.setBackground(buttonColor);
+            time();
         }
         else
         {
             Toast.makeText(this, "No More Questions", Toast.LENGTH_SHORT).show();
-            total=String.valueOf(points)+"/"+String.valueOf(questions.size());
+            total=String.valueOf(points)+"/"+String.valueOf(questionList.size());
             Intent i=new Intent(QuizQuestions.this,Results.class);
             i.putExtra("points",total);
             startActivity(i);
         }
-
         aState=false;
         bState=false;
         cState=false;
         dState=false;
         answered=false;
+        timerVal=qTime;
     }
+
+    public void time() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                UpdateGUI();
+            }
+        }, 0, 1000);
+    }
+
+    private void UpdateGUI() {
+        timerVal--;
+        myHandler.post(myRunnable);
+    }
+
+    final Runnable myRunnable = new Runnable() {
+        public void run() {
+            if (timerVal==0)
+            {
+                if (correctButton == op1Button) {
+                    op1Button.setBackgroundColor(Color.GREEN);
+                } else {
+                    op1Button.setBackgroundColor(Color.RED);
+                }
+                if (correctButton == op2Button) {
+                    op2Button.setBackgroundColor(Color.GREEN);
+                } else {
+                    op2Button.setBackgroundColor(Color.RED);
+                }
+                if (correctButton == op3Button) {
+                    op3Button.setBackgroundColor(Color.GREEN);
+                } else {
+                    op3Button.setBackgroundColor(Color.RED);
+                }
+                if (correctButton == op4Button) {
+                    op4Button.setBackgroundColor(Color.GREEN);
+                } else {
+                    op4Button.setBackgroundColor(Color.RED);
+                }
+                answered=true;
+                timer.cancel();
+                Toast.makeText(QuizQuestions.this, "Time Up - Incorrect", Toast.LENGTH_SHORT).show();
+            }
+            timerText.setText(String.valueOf(timerVal));
+        }
+    };
+
+
     public void onClickA(View v)
     {
-        if(aState==false) {
+        if(aState==false&&answered==false) {
             if (correctButton == op1Button) {
                 op1Button.setBackgroundColor(Color.GREEN);
+                Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
             } else {
                 op1Button.setBackgroundColor(Color.RED);
                 correctButton.setBackgroundColor(Color.GREEN);
+                Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             }
             answered=true;
+            timer.cancel();
+        }
+        else {
+            Toast.makeText(this, "Question answered. Go to next question", Toast.LENGTH_SHORT).show();
         }
     }
     public void onClickB(View v)
     {
-        if(bState==false) {
+        if(bState==false&&answered==false) {
             if (correctButton == op2Button) {
                 op2Button.setBackgroundColor(Color.GREEN);
+                Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
             } else {
                 op2Button.setBackgroundColor(Color.RED);
                 correctButton.setBackgroundColor(Color.GREEN);
+                Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             }
             answered=true;
+            timer.cancel();
+        }
+        else {
+            Toast.makeText(this, "Question answered. Go to next question", Toast.LENGTH_SHORT).show();
         }
     }
     public void onClickC(View v)
     {
-        if(cState==false) {
+        if(cState==false&&answered==false) {
             if (correctButton == op3Button) {
                 op3Button.setBackgroundColor(Color.GREEN);
+                Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
             } else {
                 op3Button.setBackgroundColor(Color.RED);
                 correctButton.setBackgroundColor(Color.GREEN);
+                Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             }
             answered=true;
+            timer.cancel();
+        }
+        else {
+            Toast.makeText(this, "Question answered. Go to next question", Toast.LENGTH_SHORT).show();
         }
     }
     public void onClickD(View v)
     {
-        if(dState==false) {
+        if(dState==false&&answered==false) {
             if (correctButton == op4Button) {
                 op4Button.setBackgroundColor(Color.GREEN);
+                Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
             } else {
                 op4Button.setBackgroundColor(Color.RED);
                 correctButton.setBackgroundColor(Color.GREEN);
+                Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             }
             answered=true;
+            timer.cancel();
+        }
+        else{
+            Toast.makeText(this, "Question answered. Go to next question", Toast.LENGTH_SHORT).show();
         }
     }
     public void onNextQ(View v)
     {
         if(answered==true) {
+            if (timer!=null) {
+                timer.cancel();
+            }
             nextQuestion();
         }
         else{

@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.quizwiz.PreviewQuestion">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Category - Computer Science"
+        android:id="@+id/previewHeader"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="In which header file is the NULL macro defined?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/previewQuestion"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="39dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:text="stdio.h"
+        android:id="@+id/button15"
+        android:onClick="onClickA"
+        android:textAllCaps="false"
+        android:layout_marginTop="32dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/previewQuestion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:text="stdlib.h"
+        android:id="@+id/button16"
+        android:onClick="onClickB"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        android:layout_below="@+id/button15"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:text="stdio.h and stddef.h"
+        android:id="@+id/button17"
+        android:onClick="onClickC"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        android:layout_below="@+id/button16"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:text="math.h"
+        android:id="@+id/button18"
+        android:onClick="onClickD"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        android:layout_below="@+id/button17"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:text="Submit Question"
+        android:onClick="onSubmit"
+        android:textAllCaps="false"
+        android:id="@+id/button19"
+        android:textSize="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Answer: Select the answer with the buttons above"
+        android:id="@+id/previewAnswer"
+        android:layout_marginTop="45dp"
+        android:layout_below="@+id/button18"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
