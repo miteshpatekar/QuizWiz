@@ -30,12 +30,11 @@
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="75dp"
+        android:layout_height="60dp"
         android:text="stdio.h"
         android:id="@+id/button15"
         android:onClick="onClickA"
         android:textAllCaps="false"
-        android:layout_marginTop="32dp"
         android:textSize="15dp"
         android:layout_below="@+id/previewQuestion"
         android:layout_alignParentLeft="true"
@@ -43,51 +42,49 @@
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="75dp"
+        android:layout_height="60dp"
         android:text="stdlib.h"
         android:id="@+id/button16"
         android:onClick="onClickB"
         android:textAllCaps="false"
         android:textSize="15dp"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/button15"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="75dp"
+        android:layout_height="60dp"
         android:text="stdio.h and stddef.h"
         android:id="@+id/button17"
         android:onClick="onClickC"
         android:textAllCaps="false"
         android:textSize="15dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/button16"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="75dp"
+        android:layout_height="60dp"
         android:text="math.h"
         android:id="@+id/button18"
         android:onClick="onClickD"
         android:textAllCaps="false"
         android:textSize="15dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/button17"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentLeft="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
         android:text="Submit Question"
         android:onClick="onSubmit"
         android:textAllCaps="false"
         android:id="@+id/button19"
         android:textSize="15dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

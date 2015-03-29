@@ -58,7 +58,7 @@ public class QuizQuestions extends ActionBarActivity {
     int points=0;
     String total="";
     private Timer timer = new Timer();
-    int qTime=26;
+    int qTime=31;
     int timerVal=qTime;
     final Handler myHandler = new Handler();
 
@@ -86,16 +86,7 @@ public class QuizQuestions extends ActionBarActivity {
         op3Button=(Button)findViewById(R.id.button10);
         op4Button=(Button)findViewById(R.id.button11);
         buttonColor = op1Button.getBackground();
-
-
-        q1=new Question("In Java the correct declaration of an integer named i is:","int i;","i = int;","integer = i;"
-                ,"int = i;","int i;");
-        q2=new Question("What is the brain of the computer?","Motherboard","RAM","CPU","NIC","CPU");
-        q3=new Question("An IP address is a numeric quantity that identifies","a network adapter to other devices on the network","the manufacturer of a computer","the physical location of a computer","none of the above","a network adapter to other devices on the network");
         questionList=new ArrayList<Question>();
-        // questions.add(q1);
-        // questions.add(q2);
-        // questions.add(q3);
 
         retrieveData();
         // nextQuestion();
@@ -144,7 +135,7 @@ public class QuizQuestions extends ActionBarActivity {
             }
             // ....
         });
-
+        //myFirebaseRef.orderByKey();
         myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -212,7 +203,7 @@ public class QuizQuestions extends ActionBarActivity {
     public void nextQuestion()
     {
         qCount++;
-        pointsText.setText("Points: " +points);
+        //pointsText.setText("Points: " +points);
         if ((questionList.size()-qCount)<=0){
             qLeftText.setText("Questions Left: 0");
         }
@@ -318,6 +309,11 @@ public class QuizQuestions extends ActionBarActivity {
         if(aState==false&&answered==false) {
             if (correctButton == op1Button) {
                 op1Button.setBackgroundColor(Color.GREEN);
+
+                op2Button.setBackground(buttonColor);
+                op3Button.setBackground(buttonColor);
+                op4Button.setBackground(buttonColor);
+
                 Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
             } else {
@@ -325,6 +321,7 @@ public class QuizQuestions extends ActionBarActivity {
                 correctButton.setBackgroundColor(Color.GREEN);
                 Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             }
+            pointsText.setText("Points: " +points);
             answered=true;
             timer.cancel();
         }
@@ -337,6 +334,11 @@ public class QuizQuestions extends ActionBarActivity {
         if(bState==false&&answered==false) {
             if (correctButton == op2Button) {
                 op2Button.setBackgroundColor(Color.GREEN);
+
+                op1Button.setBackground(buttonColor);
+                op3Button.setBackground(buttonColor);
+                op4Button.setBackground(buttonColor);
+
                 Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
             } else {
@@ -344,6 +346,7 @@ public class QuizQuestions extends ActionBarActivity {
                 correctButton.setBackgroundColor(Color.GREEN);
                 Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             }
+            pointsText.setText("Points: " +points);
             answered=true;
             timer.cancel();
         }
@@ -356,13 +359,20 @@ public class QuizQuestions extends ActionBarActivity {
         if(cState==false&&answered==false) {
             if (correctButton == op3Button) {
                 op3Button.setBackgroundColor(Color.GREEN);
+
+                op1Button.setBackground(buttonColor);
+                op2Button.setBackground(buttonColor);
+                op4Button.setBackground(buttonColor);
+
                 Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
+                pointsText.setText("Points: " +points);
             } else {
                 op3Button.setBackgroundColor(Color.RED);
                 correctButton.setBackgroundColor(Color.GREEN);
                 Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             }
+            pointsText.setText("Points: " +points);
             answered=true;
             timer.cancel();
         }
@@ -375,6 +385,11 @@ public class QuizQuestions extends ActionBarActivity {
         if(dState==false&&answered==false) {
             if (correctButton == op4Button) {
                 op4Button.setBackgroundColor(Color.GREEN);
+
+                op1Button.setBackground(buttonColor);
+                op2Button.setBackground(buttonColor);
+                op3Button.setBackground(buttonColor);
+
                 Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
             } else {
@@ -382,6 +397,7 @@ public class QuizQuestions extends ActionBarActivity {
                 correctButton.setBackgroundColor(Color.GREEN);
                 Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             }
+            pointsText.setText("Points: " +points);
             answered=true;
             timer.cancel();
         }

@@ -62,7 +62,4 @@ public class Categories extends ActionBarActivity {
         i.putExtra("category",category);
         startActivity(i);
     }
-
-
-
 }

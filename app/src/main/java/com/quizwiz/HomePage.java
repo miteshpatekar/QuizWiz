@@ -19,7 +19,6 @@ import com.firebase.client.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class HomePage extends ActionBarActivity {
 
     String uname=null;
@@ -30,7 +29,7 @@ public class HomePage extends ActionBarActivity {
         setContentView(R.layout.activity_home_page);
         Firebase.setAndroidContext(this);
 
-        // Save the session state username
+        /*// Save the session state username
         SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
         editor.putString("uname", "avelankar"); //set username in shared session variable
         editor.commit();
@@ -101,7 +100,7 @@ public class HomePage extends ActionBarActivity {
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
-        });
+        });*/
     }
 
     public void QuickQuiz(View v)
