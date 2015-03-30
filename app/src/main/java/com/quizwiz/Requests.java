@@ -43,25 +43,38 @@ public class Requests extends ActionBarActivity {
         requestRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                ListView lView = (ListView)findViewById(R.id.listViewRequest);
-                list.clear();
-                Log.d("Values are ", snapshot.getValue().toString());
+                TextView tv=null;
+                if(snapshot.getValue()!=null) {
+                    ListView lView = (ListView) findViewById(R.id.listViewRequest);
+                    list.clear();
 
-                // store the values in map structure
-                Map<String, Boolean> newRequests = (Map<String, Boolean>) snapshot.getValue();
-                TextView tv=(TextView)findViewById(R.id.RequestText);
-                Log.d("requestsss ",Integer.toString(newRequests.size()));
-                tv.setText(Integer.toString(newRequests.size()));
-                //iterate through the list
-                for(Map.Entry<String, Boolean> entry : newRequests.entrySet()) {
-                    String key = entry.getKey(); // gets the key of object
-                    Log.d("Key is", key);
-                    if(entry.getValue()==false) {
-                        list.add(key);
+                    // store the values in map structure
+                    Map<String, Boolean> newRequests = (Map<String, Boolean>) snapshot.getValue();
+                    tv = (TextView) findViewById(R.id.RequestText);
+                    Log.d("requestsss ", Integer.toString(newRequests.size()));
+
+                    int cnt=0;
+                    //iterate through the list
+
+                    for (Map.Entry<String, Boolean> entry : newRequests.entrySet()) {
+                        String key = entry.getKey(); // gets the key of object
+                        Log.d("Key is", key);
+                        if (entry.getValue() == false) {
+                            list.add(key);
+                            cnt++;
+                        }
+                        //handle listview and assign adapter
+                        lView.setAdapter(adapter);
+                        Log.d("Vales is", entry.getValue().toString());
                     }
-                    //handle listview and assign adapter
-                    lView.setAdapter(adapter);
-                    Log.d("Vales is", entry.getValue().toString());
+                    if(cnt==0)
+                        tv.setText("No more Request !");
+                    else
+                        tv.setText("Requests ("+Integer.toString(cnt)+")");
+                }
+                else
+                {
+                    tv.setText("No Requests");
                 }
             }
 

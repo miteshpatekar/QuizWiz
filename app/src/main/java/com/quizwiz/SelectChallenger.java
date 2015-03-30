@@ -46,16 +46,17 @@ public class SelectChallenger extends ActionBarActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Log.d("Values are ", snapshot.getValue().toString());
+
                 // store the values in map structure
-                Map<String, Boolean> newPost = (Map<String, Boolean>) snapshot.getValue();
+                Map<String, Boolean> friendsList = (Map<String, Boolean>) snapshot.getValue();
                 //iterate through the list
-                for(Map.Entry<String, Boolean> entry : newPost.entrySet()) {
-                    String key = entry.getKey(); // gets the key of object
-                    Log.d("Key is", key);
-                    list.add(key);
-                    listview.setAdapter(adapter);
-                    Log.d("Vales is", entry.getValue().toString());
+                if(friendsList!=null) {
+                    for (Map.Entry<String, Boolean> entry : friendsList.entrySet()) {
+                        String key = entry.getKey(); // gets the key of object
+                        list.add(key);
+                        listview.setAdapter(adapter);
+
+                    }
                 }
             }
 

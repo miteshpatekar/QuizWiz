@@ -69,6 +69,10 @@
             android:name=".PreviewQuestion"
             android:label="@string/title_activity_preview_question" >
         </activity>
+        <activity
+            android:name=".ChallengeStart"
+            android:label="@string/title_activity_challenge_start" >
+        </activity>
     </application>
 
 </manifest>

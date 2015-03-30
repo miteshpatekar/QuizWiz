@@ -7,6 +7,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -19,9 +22,11 @@ import com.firebase.client.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class HomePage extends ActionBarActivity {
 
     String uname=null;
+    String usrnameIntent=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,78 +34,54 @@ public class HomePage extends ActionBarActivity {
         setContentView(R.layout.activity_home_page);
         Firebase.setAndroidContext(this);
 
-        /*// Save the session state username
+        // get the username from login and register
+       // Intent intent=getIntent();
+        //if(intent.getStringExtra("username")!=null) {
+          //  usrnameIntent = intent.getStringExtra("username");
+        //}
+        usrnameIntent="avelankar";
+
+        // Save the session state username
         SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
-        editor.putString("uname", "avelankar"); //set username in shared session variable
+        //editor.putString("uname", usrnameIntent); //set username in shared session variable
         editor.commit();
 
         SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
         uname = prefs.getString("uname", "No name defined");//"No name defined" is the default value.
-        Toast.makeText(this,"Welcome"+uname,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Welcome " +usrnameIntent,Toast.LENGTH_SHORT).show();
 
-        // Firebase code
-        // get the firebase db reference
-        Firebase myFirebaseRef = new Firebase(getString(R.string.FireBaseDBReference));
-
-        Query queryRef = myFirebaseRef.orderByValue();
-        // add event listener
-        queryRef.addChildEventListener(new ChildEventListener() {
-            // to read the data when child of object is added
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                System.out.println("Key is" + snapshot.getKey() + " value is " + snapshot.getValue());
-                Log.d("Msg","Key is" + snapshot.getKey() + " value is " + snapshot.getValue());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-            // ....
-        });
-
-        //to get the request List
-        // Get a reference to our posts
-
+        //to get the request List Count
         Firebase requestRef = new Firebase(getString(R.string.FireBaseDBReference)+"/User/"+uname+"/requestList");
 
         requestRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                Button reqBtn=null;
+                if(snapshot.getValue()!=null) {
+                    // store the values in map structure
+                    Map<String, Boolean> newRequests = (Map<String, Boolean>) snapshot.getValue();
+                    reqBtn = (Button) findViewById(R.id.RequestBtn);
 
-                Log.d("Values are ", snapshot.getValue().toString());
+                    int cnt=0;
+                    //iterate through the list
 
-                // store the values in map structure
-                Map<String, Object> newPost = (Map<String, Object>) snapshot.getValue();
-                //iterate through the list
-                for(Map.Entry<String, Object> entry : newPost.entrySet()) {
-                    String key = entry.getKey(); // gets the key of object
-                    Log.d("Key is", key);
-                    Object value = entry.getValue();
-                    Log.d("Vales is", entry.getValue().toString());
+                    for (Map.Entry<String, Boolean> entry : newRequests.entrySet()) {
+                        if (entry.getValue() == false) {
+                            cnt++;
+                        }
+                    }
+                    if(cnt!=0)
+                        reqBtn.setText("Requests("+cnt+")");
                 }
+                else{}
+
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
-        });*/
+        });
     }
 
     public void QuickQuiz(View v)
@@ -113,7 +94,7 @@ public class HomePage extends ActionBarActivity {
 
     public void Challenge(View v) {
         Intent i = new Intent(HomePage.this, Categories.class);
-        i.putExtra("activity", "quiz");
+        i.putExtra("activity", "challenge");
         Intent i2 = new Intent(new Intent(HomePage.this, SelectChallenger.class));
         startActivity(i2);
     }

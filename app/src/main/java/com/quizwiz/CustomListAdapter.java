@@ -12,7 +12,10 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,23 +84,65 @@ public class CustomListAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
 
-                String requestUname=list.get(position);
+                final String requestUname=list.get(position);
 
                 // Accept friend and add it in owns friends list
-                Map<String, Boolean> friendName = new HashMap<String, Boolean>();
-                friendName.put(requestUname, true);
-                requestRef.child(uname).child("friendsList").setValue(friendName);
+                requestRef.child(uname).child("friendsList").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        // store the values in map structure
+                        Map<String, Boolean> friendList = (Map<String, Boolean>) snapshot.getValue();
+                        if (friendList == null) {
+                            Map<String, Boolean> friendName = new HashMap<String,Boolean>();
+                            friendName.put(requestUname, false);
+                            requestRef.child(uname).child("friendsList").setValue(friendName);
 
-                // set requestList status to true
-                requestRef.child(uname).child("requestList").child(requestUname).setValue(true);
+                        }
+                        else
+                        {
+                            friendList.put(requestUname, false);
+                            requestRef.child(uname).child("friendsList").setValue(friendList);
+                        }
+                        // set status to true
+                        requestRef.child(uname).child("requestList").child(requestUname).setValue(true);
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        System.out.println("The read failed: " + firebaseError.getMessage());
+                    }
+                });
+
+
 
                 // Accept friend and add it in friends friends list
-                Map<String, Boolean> requestName = new HashMap<String,Boolean>();
-                requestName.put(uname, true);
-                requestRef.child(requestUname).child("friendsList").setValue(requestName);
+
+                requestRef.child(requestUname).child("friendsList").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        // store the values in map structure
+                        Map<String, Boolean> friendList = (Map<String, Boolean>) snapshot.getValue();
+                        if (friendList == null) {
+                            Map<String, Boolean> friendName = new HashMap<String,Boolean>();
+                            friendName.put(uname, false);
+                            requestRef.child(requestUname).child("friendsList").setValue(friendName);
+
+                        }
+                        else
+                        {
+                            friendList.put(uname, false);
+                            requestRef.child(requestUname).child("friendsList").setValue(friendList);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        System.out.println("The read failed: " + firebaseError.getMessage());
+                    }
+                });
 
 
-                //Toast.makeText(this, "Friend Request accepted", Toast.LENGTH_SHORT).show();
                 list.remove(position); //or some other task
                 notifyDataSetChanged();
             }
