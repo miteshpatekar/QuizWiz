@@ -1,7 +1,9 @@
 package com.quizwiz;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +73,7 @@ public class CustomListAdapter extends BaseAdapter implements ListAdapter {
 
         // Get a reference to our posts
         final Firebase requestRef = new Firebase("https://popping-heat-8474.firebaseio.com"+"/User");
+        final Firebase userMapRef = new Firebase("https://popping-heat-8474.firebaseio.com"+"/UserMap");
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -87,24 +90,49 @@ public class CustomListAdapter extends BaseAdapter implements ListAdapter {
                 final String requestUname=list.get(position);
 
                 // Accept friend and add it in owns friends list
-                requestRef.child(uname).child("friendsList").addValueEventListener(new ValueEventListener() {
+
+
+                userMapRef.child(uname).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
+
                         // store the values in map structure
-                        Map<String, Boolean> friendList = (Map<String, Boolean>) snapshot.getValue();
-                        if (friendList == null) {
-                            Map<String, Boolean> friendName = new HashMap<String,Boolean>();
-                            friendName.put(requestUname, false);
-                            requestRef.child(uname).child("friendsList").setValue(friendName);
+                        if(snapshot.getValue()==null)
+                        {
+                           // AlertDialog alert = builder.setMessage("Username "+username+ " doesnt exists !").create();
+                            //alert.show();
+                        }
+                        else {
+                            Log.d("yesssssss", snapshot.getValue().toString());
+                            final String userKey=snapshot.getValue().toString();
+
+                            requestRef.child(userKey).child(uname).child("friendsList").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot snapshot) {
+                                    // store the values in map structure
+                                    Map<String, Boolean> friendList = (Map<String, Boolean>) snapshot.getValue();
+                                    if (friendList == null) {
+                                        Map<String, Boolean> friendName = new HashMap<String,Boolean>();
+                                        friendName.put(requestUname, false);
+                                        requestRef.child(userKey).child(uname).child("friendsList").setValue(friendName);
+
+                                    }
+                                    else
+                                    {
+                                        friendList.put(requestUname, false);
+                                        requestRef.child(userKey).child(uname).child("friendsList").setValue(friendList);
+                                    }
+                                    // set status to true
+                                    requestRef.child(userKey).child(uname).child("requestList").child(requestUname).setValue(true);
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+                                    System.out.println("The read failed: " + firebaseError.getMessage());
+                                }
+                            });
 
                         }
-                        else
-                        {
-                            friendList.put(requestUname, false);
-                            requestRef.child(uname).child("friendsList").setValue(friendList);
-                        }
-                        // set status to true
-                        requestRef.child(uname).child("requestList").child(requestUname).setValue(true);
                     }
 
                     @Override
@@ -115,25 +143,50 @@ public class CustomListAdapter extends BaseAdapter implements ListAdapter {
 
 
 
+
+
                 // Accept friend and add it in friends friends list
 
-                requestRef.child(requestUname).child("friendsList").addValueEventListener(new ValueEventListener() {
+
+                userMapRef.child(requestUname).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
+
                         // store the values in map structure
-                        Map<String, Boolean> friendList = (Map<String, Boolean>) snapshot.getValue();
-                        if (friendList == null) {
-                            Map<String, Boolean> friendName = new HashMap<String,Boolean>();
-                            friendName.put(uname, false);
-                            requestRef.child(requestUname).child("friendsList").setValue(friendName);
-
-                        }
-                        else
+                        if(snapshot.getValue()==null)
                         {
-                            friendList.put(uname, false);
-                            requestRef.child(requestUname).child("friendsList").setValue(friendList);
+                            // AlertDialog alert = builder.setMessage("Username "+username+ " doesnt exists !").create();
+                            //alert.show();
                         }
+                        else {
+                            Log.d("yesssssss", snapshot.getValue().toString());
+                            final String userKey=snapshot.getValue().toString();
 
+                            requestRef.child(userKey).child(requestUname).child("friendsList").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot snapshot) {
+                                    // store the values in map structure
+                                    Map<String, Boolean> friendList = (Map<String, Boolean>) snapshot.getValue();
+                                    if (friendList == null) {
+                                        Map<String, Boolean> friendName = new HashMap<String,Boolean>();
+                                        friendName.put(uname, false);
+                                        requestRef.child(userKey).child(requestUname).child("friendsList").setValue(friendName);
+
+                                    }
+                                    else
+                                    {
+                                        friendList.put(uname, false);
+                                        requestRef.child(userKey).child(requestUname).child("friendsList").setValue(friendList);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+                                    System.out.println("The read failed: " + firebaseError.getMessage());
+                                }
+                            });
+                        }
                     }
 
                     @Override

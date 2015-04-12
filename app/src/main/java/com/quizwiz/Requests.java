@@ -21,6 +21,7 @@ import java.util.Map;
 public class Requests extends ActionBarActivity {
 
     String uname=null;
+    String ukey=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,8 @@ public class Requests extends ActionBarActivity {
         // get the current username
         SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
         uname = prefs.getString("uname", "No name defined");//"No name defined" is the default value.
+        // get the current userkey
+        ukey = prefs.getString("ukey", "No name defined");
 
         //generate list
         final ArrayList<String> list = new ArrayList<String>();
@@ -38,7 +41,7 @@ public class Requests extends ActionBarActivity {
 
         //to get the request List
         // Get a reference to our posts
-        Firebase requestRef = new Firebase(getString(R.string.FireBaseDBReference)+"/User/"+uname+"/requestList");
+        Firebase requestRef = new Firebase(getString(R.string.FireBaseDBReference)+"/User/"+ukey+"/"+uname+"/requestList");
 
         requestRef.addValueEventListener(new ValueEventListener() {
             @Override

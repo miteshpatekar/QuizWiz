@@ -26,6 +26,7 @@ import java.util.Map;
 public class AddFriend extends ActionBarActivity {
 
     Firebase ref=null;
+    Firebase userMapRef=null;
     Map<String, Boolean> reqNameList = null;
 
     public void setMap(Map<String, Boolean> req){
@@ -43,6 +44,7 @@ public class AddFriend extends ActionBarActivity {
         setContentView(R.layout.activity_add_friend);
 
         ref=new Firebase(getString(R.string.FireBaseDBReference)+"/User");
+        userMapRef=new Firebase(getString(R.string.FireBaseDBReference)+"/UserMap");
     }
 
     @Override
@@ -68,8 +70,13 @@ public class AddFriend extends ActionBarActivity {
     }
     public void AddFriendBtn(View v)
     {
+        // get session state username
         SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
         final String uname = prefs.getString("uname", "No name defined");//"No name defined" is the default value.
+
+        // get session state useruserKey
+        final String ukey = prefs.getString("ukey", "No name defined");//"No name defined" is the default value.
+
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false)
@@ -83,53 +90,86 @@ public class AddFriend extends ActionBarActivity {
         final String unameFriend=edtext.getText().toString();
         Log.d("username ", uname + " " + unameFriend);
 
-
-
-        ref.child(unameFriend).addListenerForSingleValueEvent(new ValueEventListener() {
+        userMapRef.child(unameFriend).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null) {
-                    AlertDialog alert = builder.setMessage(unameFriend+" doesnt exist!").create();
+            public void onDataChange(DataSnapshot snapshot) {
+
+                // store the values in map structure
+                if(snapshot.getValue()==null)
+                {
+                    AlertDialog alert = builder.setMessage("Username "+unameFriend+ " doesnt exists !").create();
                     alert.show();
-                } else {
-                    ref.child(unameFriend).child("requestList").addListenerForSingleValueEvent(new ValueEventListener() {
+                }
+                else {
+                    // get the key of friend user
+                    Log.d("yesssssss", snapshot.getValue().toString());
+                    final String userFriendKey=snapshot.getValue().toString();
+
+
+                    ref.child(userFriendKey).child(unameFriend).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            // store the values in map structure
-                            Map<String, Boolean> requests = (Map<String, Boolean>) snapshot.getValue();
-                            if (requests == null) {
-                                Map<String, Boolean> requestName = new HashMap<String,Boolean>();
-                                requestName.put(uname, false);
-                                ref.child(unameFriend).child("requestList").setValue(requestName);
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue() == null) {
+                                //AlertDialog alert = builder.setMessage(unameFriend+" doesnt exist!").create();
+                                //alert.show();
+                            } else {
+                                ref.child(userFriendKey).child(unameFriend).child("requestList").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot snapshot) {
+                                        // store the values in map structure
+                                        Map<String, Boolean> requests = (Map<String, Boolean>) snapshot.getValue();
+                                        if (requests == null) {
+                                            Map<String, Boolean> requestName = new HashMap<String,Boolean>();
+                                            requestName.put(uname, false);
+                                            ref.child(userFriendKey).child(unameFriend).child("requestList").setValue(requestName);
+                                        }
+                                        else
+                                        {
+                                            requests.put(uname, false);
+                                            ref.child(userFriendKey).child(unameFriend).child("requestList").setValue(requests);
+                                        }
+
+                                        // show alert
+
+                                        AlertDialog alert = builder.setMessage("Friend Request Sent to "+unameFriend).create();
+                                        alert.show();
+                                        edtext.setText("");
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(FirebaseError firebaseError) {
+                                        System.out.println("The read failed: " + firebaseError.getMessage());
+                                    }
+                                });
+
                             }
-                            else
-                            {
-                                requests.put(uname, false);
-                                ref.child(unameFriend).child("requestList").setValue(requests);
-                            }
-
-                            // show alert
-
-                            AlertDialog alert = builder.setMessage("Friend Request Sent to "+unameFriend).create();
-                            alert.show();
-                            edtext.setText("");
-
                         }
 
                         @Override
                         public void onCancelled(FirebaseError firebaseError) {
-                            System.out.println("The read failed: " + firebaseError.getMessage());
+
                         }
                     });
+
+
+
 
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
+
+
+
+
+
+
+
 
 
 

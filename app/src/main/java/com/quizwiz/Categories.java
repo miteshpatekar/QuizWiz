@@ -30,6 +30,9 @@ public class Categories extends ActionBarActivity {
         if (activity.equals("quiz")) {
             i = new Intent(Categories.this, QuizQuestions.class);
         }
+        if (activity.equals("challenge")){
+            i = new Intent(Categories.this, SelectChallenger.class);
+        }
         else{
             i = new Intent(Categories.this, PostQuiz.class);
         }
@@ -43,6 +46,9 @@ public class Categories extends ActionBarActivity {
         if (activity.equals("quiz")) {
             i=new Intent(Categories.this, QuizQuestions.class);
         }
+        if (activity.equals("challenge")){
+            i = new Intent(Categories.this, SelectChallenger.class);
+        }
         else{
             i = new Intent(Categories.this, PostQuiz.class);
         }
@@ -55,6 +61,9 @@ public class Categories extends ActionBarActivity {
         category="Movies";
         if (activity.equals("quiz")) {
             i=new Intent(Categories.this, QuizQuestions.class);
+        }
+        if (activity.equals("challenge")){
+            i = new Intent(Categories.this, SelectChallenger.class);
         }
         else{
             i = new Intent(Categories.this, PostQuiz.class);

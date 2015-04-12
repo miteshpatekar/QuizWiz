@@ -77,6 +77,7 @@ public class RegisterActivity extends ActionBarActivity {
                 }
 
                 intent.putExtra("username",usrname);
+                intent.putExtra("userKey",postId);
                 startActivity(intent);
             }
 
@@ -88,6 +89,5 @@ public class RegisterActivity extends ActionBarActivity {
 
 
     }
-
 
 }
