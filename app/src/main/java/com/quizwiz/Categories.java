@@ -30,7 +30,7 @@ public class Categories extends ActionBarActivity {
         if (activity.equals("quiz")) {
             i = new Intent(Categories.this, QuizQuestions.class);
         }
-        if (activity.equals("challenge")){
+        else if (activity.equals("challenge")){
             i = new Intent(Categories.this, SelectChallenger.class);
         }
         else{
@@ -46,7 +46,7 @@ public class Categories extends ActionBarActivity {
         if (activity.equals("quiz")) {
             i=new Intent(Categories.this, QuizQuestions.class);
         }
-        if (activity.equals("challenge")){
+        else if (activity.equals("challenge")){
             i = new Intent(Categories.this, SelectChallenger.class);
         }
         else{
@@ -62,7 +62,7 @@ public class Categories extends ActionBarActivity {
         if (activity.equals("quiz")) {
             i=new Intent(Categories.this, QuizQuestions.class);
         }
-        if (activity.equals("challenge")){
+        else if (activity.equals("challenge")){
             i = new Intent(Categories.this, SelectChallenger.class);
         }
         else{

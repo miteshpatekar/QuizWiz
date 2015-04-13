@@ -5,84 +5,134 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".HomePage">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="Quick Quiz"
-        android:id="@+id/button"
-        android:onClick="QuickQuiz"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="Challenge"
-        android:id="@+id/button2"
-        android:onClick="Challenge"
-        android:layout_below="@+id/button"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="Invite Friends"
-        android:id="@+id/button3"
-        android:onClick="InviteFriends"
-        android:layout_below="@+id/button2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button2"
-        android:layout_alignEnd="@+id/button2" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="Post Question"
-        android:id="@+id/button5"
-        android:onClick="PostQuestion"
-        android:layout_below="@+id/button3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button3"
-        android:layout_alignEnd="@+id/button3" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="Add Friend"
-        android:id="@+id/button6"
-        android:onClick="AddFriend"
-        android:layout_below="@+id/button5"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button3"
-        android:layout_alignEnd="@+id/button3" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="Profile"
-        android:id="@+id/button4"
-        android:onClick="Profile"
-        android:layout_below="@+id/button6"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button3"
-        android:layout_alignEnd="@+id/button3" />
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/button"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:longClickable="true"
+                android:src="@drawable/quickquiz"
+                android:onClick="QuickQuiz"
+                android:adjustViewBounds="false"
+                android:layout_margin="5dp"
+                android:background="#ffffffff" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="Requests"
-        android:id="@+id/RequestBtn"
-        android:onClick="Requests"
-        android:layout_below="@+id/button4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button4"
-        android:layout_alignEnd="@+id/button4" />
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/button2"
+                android:src="@drawable/challenge"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                android:onClick="Challenge"
+                android:adjustViewBounds="false"
+                android:layout_margin="5dp"
+                android:background="#ffffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/button3"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:src="@drawable/invitefriend"
+                android:onClick="InviteFriends"
+                android:adjustViewBounds="false"
+                android:layout_margin="5dp"
+                android:background="#ffffffff" />
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/RequestBtn"
+                android:layout_weight="1"
+                android:src="@drawable/requests"
+                android:scaleType="centerInside"
+                android:onClick="Requests"
+                android:adjustViewBounds="false"
+                android:layout_margin="5dp"
+                android:background="#ffffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/button6"
+                android:layout_weight="1"
+                android:src="@drawable/addfriend"
+                android:scaleType="centerInside"
+                android:onClick="AddFriend"
+                android:adjustViewBounds="false"
+                android:layout_margin="5dp"
+                android:background="#ffffffff" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/button5"
+                android:layout_weight="1"
+                android:src="@drawable/postquestion"
+                android:scaleType="centerInside"
+                android:onClick="PostQuestion"
+                android:adjustViewBounds="false"
+                android:layout_margin="5dp"
+                android:background="#ffffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/button4"
+                android:layout_weight="1"
+                android:src="@drawable/profile"
+                android:scaleType="centerInside"
+                android:onClick="Profile"
+                android:adjustViewBounds="false"
+                android:layout_margin="5dp"
+                android:background="#ffffffff" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>

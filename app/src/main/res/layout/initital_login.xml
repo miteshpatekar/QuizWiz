@@ -17,7 +17,8 @@
     android:onClick='onRegister'
         android:layout_weight="0.15"
         android:textSize="24dp"
-    />
+        android:background="#ffffffff"
+        android:layout_margin="5dp" />
 
     <Button
     android:layout_width='fill_parent'
@@ -25,7 +26,9 @@
     android:text='Login'
     android:onClick='onLogin'
         android:layout_weight="0.15"
-        android:textSize="24dp"/>
+        android:textSize="24dp"
+        android:background="#ffffffff"
+        android:layout_margin="5dp" />
 
     <Button
         android:layout_width='fill_parent'
@@ -34,7 +37,9 @@
         android:onClick='onGuest'
         android:layout_weight="0.15
        "
-        android:textSize="24dp" />
+        android:textSize="24dp"
+        android:background="#ffffffff"
+        android:layout_margin="5dp" />
 
 
 </LinearLayout>

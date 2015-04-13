@@ -1,5 +1,5 @@
 <resources>
-    <color name="custom_theme_color">#4775A3</color>
+    <color name="custom_theme_color">#ff17aeff</color>
     <!-- Base application theme. -->
     <style name="ActionBar" parent="android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/custom_theme_color</item>

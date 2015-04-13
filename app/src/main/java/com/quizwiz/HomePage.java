@@ -67,11 +67,11 @@ public class HomePage extends ActionBarActivity {
         requestRef.child(userKeyIntent).child(uname).child("requestList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Button reqBtn = null;
+               // Button reqBtn = null;
                 if (snapshot.getValue() != null) {
                     // store the values in map structure
                     Map<String, Boolean> newRequests = (Map<String, Boolean>) snapshot.getValue();
-                    reqBtn = (Button) findViewById(R.id.RequestBtn);
+                    //reqBtn = (Button) findViewById(R.id.RequestBtn);
 
                     int cnt = 0;
                     //iterate through the list
@@ -81,8 +81,9 @@ public class HomePage extends ActionBarActivity {
                             cnt++;
                         }
                     }
-                    if (cnt != 0)
-                        reqBtn.setText("Requests(" + cnt + ")");
+                    if (cnt != 0) {
+                        //reqBtn.setText("Requests(" + cnt + ")");
+                    }
                 } else {
                 }
 

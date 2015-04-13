@@ -70,6 +70,7 @@ public class QuizQuestions extends ActionBarActivity {
     int questionCount=1;
     String category="";
     int maxQuestions=10;
+    String colorVal="#FFFFFF";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,10 +235,10 @@ public class QuizQuestions extends ActionBarActivity {
             } else if (op4Button.getText().equals(correct)) {
                 correctButton = op4Button;
             }
-            op1Button.setBackground(buttonColor);
-            op2Button.setBackground(buttonColor);
-            op3Button.setBackground(buttonColor);
-            op4Button.setBackground(buttonColor);
+            op1Button.setBackgroundColor(Color.parseColor(colorVal));
+            op2Button.setBackgroundColor(Color.parseColor(colorVal));
+            op3Button.setBackgroundColor(Color.parseColor(colorVal));
+            op4Button.setBackgroundColor(Color.parseColor(colorVal));
             time();
         }
         else
@@ -299,7 +300,14 @@ public class QuizQuestions extends ActionBarActivity {
                 timer.cancel();
                 Toast.makeText(QuizQuestions.this, "Time Up - Incorrect", Toast.LENGTH_SHORT).show();
             }
-            timerText.setText(String.valueOf(timerVal));
+            if(timerVal<10) {
+                String t="0"+String.valueOf(timerVal);
+                timerText.setText(String.valueOf(t));
+            }
+            else {
+                timerText.setText(String.valueOf(timerVal));
+            }
+
         }
     };
 
@@ -309,10 +317,9 @@ public class QuizQuestions extends ActionBarActivity {
         if(aState==false&&answered==false) {
             if (correctButton == op1Button) {
                 op1Button.setBackgroundColor(Color.GREEN);
-
-                op2Button.setBackground(buttonColor);
-                op3Button.setBackground(buttonColor);
-                op4Button.setBackground(buttonColor);
+                op2Button.setBackgroundColor(Color.parseColor(colorVal));
+                op3Button.setBackgroundColor(Color.parseColor(colorVal));
+                op4Button.setBackgroundColor(Color.parseColor(colorVal));
 
                 Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
@@ -335,9 +342,9 @@ public class QuizQuestions extends ActionBarActivity {
             if (correctButton == op2Button) {
                 op2Button.setBackgroundColor(Color.GREEN);
 
-                op1Button.setBackground(buttonColor);
-                op3Button.setBackground(buttonColor);
-                op4Button.setBackground(buttonColor);
+                op1Button.setBackgroundColor(Color.parseColor(colorVal));
+                op3Button.setBackgroundColor(Color.parseColor(colorVal));
+                op4Button.setBackgroundColor(Color.parseColor(colorVal));
 
                 Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
@@ -359,10 +366,9 @@ public class QuizQuestions extends ActionBarActivity {
         if(cState==false&&answered==false) {
             if (correctButton == op3Button) {
                 op3Button.setBackgroundColor(Color.GREEN);
-
-                op1Button.setBackground(buttonColor);
-                op2Button.setBackground(buttonColor);
-                op4Button.setBackground(buttonColor);
+                op1Button.setBackgroundColor(Color.parseColor(colorVal));
+                op2Button.setBackgroundColor(Color.parseColor(colorVal));
+                op4Button.setBackgroundColor(Color.parseColor(colorVal));
 
                 Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;
@@ -386,9 +392,9 @@ public class QuizQuestions extends ActionBarActivity {
             if (correctButton == op4Button) {
                 op4Button.setBackgroundColor(Color.GREEN);
 
-                op1Button.setBackground(buttonColor);
-                op2Button.setBackground(buttonColor);
-                op3Button.setBackground(buttonColor);
+                op1Button.setBackgroundColor(Color.parseColor(colorVal));
+                op2Button.setBackgroundColor(Color.parseColor(colorVal));
+                op3Button.setBackgroundColor(Color.parseColor(colorVal));
 
                 Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
                 points++;

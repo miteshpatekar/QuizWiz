@@ -15,7 +15,8 @@
         android:id="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:textSize="20dp" />
 
     <ListView
         android:layout_width="wrap_content"

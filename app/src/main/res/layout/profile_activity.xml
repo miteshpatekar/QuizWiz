@@ -15,23 +15,30 @@
         android:background="#ffb4e5ff" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Logout"
+        android:textAllCaps="false"
         android:onClick="onLogout"
         android:id="@+id/button3"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textSize="20dp" />
+        android:textSize="15dp"
+        android:background="#ffffffff"
+        android:layout_margin="5dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit"
+        android:textAllCaps="false"
         android:id="@+id/button4"
         android:layout_below="@+id/imageView"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="#ffffffff"
+        android:layout_margin="5dp"
+        android:textSize="15dp" />
 
     <TextView
         android:layout_width="wrap_content"

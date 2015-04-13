@@ -7,7 +7,8 @@
 
     <TextView android:text="Request List" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/RequestText" />
+        android:id="@+id/RequestText"
+        android:textSize="20dp" />
 
     <ListView
         android:layout_width="wrap_content"
